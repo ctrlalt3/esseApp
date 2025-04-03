@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Comment;
 use App\Models\Conversation;
+use App\Models\Like;
 use App\Models\Message;
 use App\Models\Post;
 use App\Models\User;
@@ -19,13 +20,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        $this->call([
+        //$this->call([
             // UserSeeder::class,
             // PostSeeder::class,
             // CommentSeeder::class,
             // ConversationSeeder::class,
             // MessageSeeder::class,
-        ]);
+        //]);
         
         //? Crear usuario principal "qwerty"
         $qwerty = User::create([
@@ -71,6 +72,7 @@ class DatabaseSeeder extends Seeder
             foreach(range(1,1) as $i){
                 Post::factory(rand(2, 5))
                     ->has(Comment::factory(rand(4, 8))) // Crear entre 4 y 8 comentarios por post
+                    ->has(Like::factory(rand(4,8)))
                     ->create(['user_id' => $user->id]);
             }
         });

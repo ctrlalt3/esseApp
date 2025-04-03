@@ -11,8 +11,5 @@ class Comment extends Model
 
     protected $fillable = [
         'comment',
-        'date'
     ];
-
-    
 }

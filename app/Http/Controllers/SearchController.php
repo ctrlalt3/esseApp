@@ -21,7 +21,6 @@ class SearchController extends Controller
         $conversationUsers = Conversation::with('users')->find($conversation_id)->users;
         return view('editGroup', ['conversationUsers' => $conversationUsers,'users'=>$users,'conversations'=>$conversations, 'conversationUser' => $conversation]);
     }
-
     public function updateConversation(Request $request, $conversation_id){
         $conversation = Conversation::find($conversation_id);
         if($request->input('title')){

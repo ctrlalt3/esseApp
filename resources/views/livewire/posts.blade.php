@@ -7,13 +7,16 @@
                         <div class="flex gap-4 p-3 align-center">
                             <div class="bg-zinc-400 shadow-md w-8 h-8 rounded-3xl text-center font-bold"></div>
                             <a href="/dashboard/userProfile/{{ $user->id }}" class="drop-shadow-sm h-8">
-                                {{ $user->name }} · Hace {{ $post->date }} días
+                                {{ $user->name }} · Hace {{ $post->date }} día
                             </a>
                         </div>
                     @endif
                 @endforeach
                 <p class="p-3">{{ $post->title }}</p>
                 <p class="p-3">{{ $post->content }}</p>
+                <!-- Componente de Like -->
+                @livewire('like-button', ['post' => $post])
+                <!-- Componente de Like -->
                 @livewire('comments', ['post' => $post])
             </div>
         </div>

@@ -1,66 +1,56 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## EsseApp
+Especie de red social, donde puedes tanto como seguir usuarios, ver y comentar sus publicaciones y crear publicaciones, además de poder crear conversaciones con diversos usuarios
+##
+A continuación describe las tablas y sus relaciones utilizadas en la base de datos.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Tablas Principales y Relaciones
 
-## About Laravel
+### 1. **Usuarios (`users` Table)**
+- Cada usuario tiene:
+  - `id`: Identificador único.
+  - `name`: Nombre del usuario.
+  - `email`: Correo electrónico.
+  - `password`: Contraseña encriptada.
+- Relaciones:
+  - Un usuario puede tener muchos `posts`.
+  - Un usuario puede tener muchos `comments` a través de sus posts.
+  - Un usuario puede participar en varias `conversations`.
+  - Un usuario puede seguir a otros usuarios (`following` relación).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 2. **Publicaciones (`posts` Table)**
+- Cada post pertenece a un usuario (`user_id`).
+- Relaciones:
+  - Un post puede tener muchos `comments`.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 3. **Comentarios (`comments` Table)**
+- Cada comentario pertenece a un post (`post_id`).
+- Relaciones:
+  - Un comentario está asociado a un post.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 4. **Conversaciones (`conversations` Table)**
+- Representa chats grupales o entre usuarios.
+- Relaciones:
+  - Una conversación puede tener múltiples `users`.
+  - Una conversación tiene múltiples `messages`.
 
-## Learning Laravel
+### 5. **Mensajes (`messages` Table)**
+- Cada mensaje pertenece a una `conversation` (`conversation_id`).
+- Cada mensaje es enviado por un `user` (`user_id`).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 6. **Seguidores (`followers` Table - Tabla Pivot)**
+- Relación muchos a muchos entre `users`.
+- Un usuario puede seguir a otros usuarios y ser seguido por otros.
+- Implementado con `following()->attach($user->id);` en el seeder.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Lógica en el Seeder
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Crea el usuario principal** `qwerty`.
+2. **Genera entre 2 y 5 posts para `qwerty`**, cada uno con entre 4 y 8 comentarios.
+3. **Crea 5 usuarios adicionales** y hace que `qwerty` siga entre 3 y 6 de ellos.
+4. **Crea 6 conversaciones** en total:
+   - Cada conversación tiene entre 2 y 4 usuarios aleatorios + `qwerty`.
+   - Se generan 5 mensajes por conversación, asignados alternadamente entre los participantes.
+5. **Cada usuario genera entre 2 y 5 posts con comentarios**.
 
-## Laravel Sponsors
+Este esquema asegura una estructura de datos robusta y relaciones bien definidas en la base de datos.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

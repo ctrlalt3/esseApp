@@ -1,5 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { scrollbar-width: none; }
+        *::-webkit-scrollbar { display: none; }
+    </style>
+    @livewireStyles
+</head>
+<body class="bg-zinc-300 text-stone-800">
+    <div class="flex overflow-hidden justify-between">
+        <!-- Sidebar -->
+        @livewire('sidebar')
+        <!-- Lista de Publicaciones -->
+        @livewire('posts')
+        <!-- Chat -->
+        @livewire('chat')
+    </div>
+    <script>
+        window.onload = function() {
+            const chatContainer = document.getElementById('chat-container');
+            if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
+        };
+    </script>
+    @livewireScripts
+</body>
+</html>
+
+
+
+{{-- <!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -83,25 +117,10 @@
                 </div>
             @endforeach
         </div>
-        {{-- transition-all duration-500 hover:w-4/6 --}}
         <div class="flex pt-4 pr-4 h-screen w-4/6  flex-col justify-start items-center rounded-lg">
             <div class="flex h-screen w-full gap-5  flex-col justify-center items-center rounded-lg ">
                 @if (!isset($messages))
                 <div class="flex flex-col rounded-lg shadow-sm justify-around w-full h-screen bg-zinc-200">
-                    {{-- <div class="h-1/6 items-left p-5">
-                        <a href="#" class="flex gap-3 px-5">
-                            <div class="bg-zinc-400 shadow-md w-8  h-8 rounded-3xl text-center font-bold"></div>   
-                            @foreach ($conversations[0]->messages as $messages)
-                                @if($messages->user_id != 2)
-                                    @foreach ($users as $user)
-                                        @if ($user->id == $messages->user_id)
-                                            <p class="drop-shadow-sm">{{$user->name}}</p>
-                                        @endif
-                                    @endforeach
-                                @endif
-                            @endforeach
-                        </a>
-                    </div>       --}}
                     <div class="p-3 text-center flex flex-col-reverse gap-6 overflow-hidden align-bottom justify-items-end"> 
                             <div class="bg-zinc-200 text-right p-3 rounded-l-md">
                                 <p>Conversacion Vacia</p>
@@ -176,4 +195,4 @@
     @livewireScripts
 </body>
 
-</html>
+</html> --}}

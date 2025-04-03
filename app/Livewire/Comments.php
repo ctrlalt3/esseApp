@@ -10,7 +10,7 @@ class Comments extends Component
     public $post;
 
     public function mount($post)
-    {
+    {   
         $this->post = $post;
     }
 
@@ -21,4 +21,4 @@ class Comments extends Component
             'users' => User::all()
         ]);
     }
-}
+} 
